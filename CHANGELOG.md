@@ -1,18 +1,22 @@
 # Changelog
 
-# v1.0.3
+## v1.0.4
+
+- Added a Readme file.
+
+## v1.0.3
 
 - Added a fix to an explict return error.
 
-# v1.0.2
+## v1.0.2
 
 - Added the `Event` interface to prevent having dependencies.
 
-# v1.0.1
+## v1.0.1
 
 - Renamed `main.ts` to `mod.ts`
 
-# v1.0.0
+## v1.0.0
 
 - Migrated the functionality from the Lunchbox project.
 - Added boilerplate Deno configuration.
