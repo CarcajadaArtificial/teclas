@@ -179,9 +179,12 @@ const isKeyStroked = (keystroke: iKeystroke, ev: Event) =>
  * @returns
  *  A function that processes keyboard events.
  */
-export const handleKeyboard = (keystrokes: iKeystroke[]) => (ev: Event) =>
-  keystrokes.forEach((keystroke) => {
-    if (isKeyStroked(keystroke, ev)) {
-      keystroke.cb(ev);
-    }
-  });
+export function handleKeyboard(keystrokes: iKeystroke[]): (ev: Event) => void {
+  return (ev: Event) => {
+    keystrokes.forEach((keystroke) => {
+      if (isKeyStroked(keystroke, ev)) {
+        keystroke.cb(ev);
+      }
+    });
+  };
+}

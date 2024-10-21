@@ -1,5 +1,9 @@
 # Changelog
 
+# v1.0.3
+
+- Added a fix to an explict return error.
+
 # v1.0.2
 
 - Added the `Event` interface to prevent having dependencies.
