@@ -22,7 +22,7 @@
  *
  * @example
  * ```ts
- * const handleKeyDown = (event: KeyboardEvent) => {
+ * const handleKeyDown = (event: Event) => {
  *   const isMac = isMacOS();
  *   if (event.key === 'Control' && !isMac) {
  *     // Handle Control key for Windows
@@ -37,89 +37,94 @@
  */
 const isMacOS = (): boolean => /Mac/.test(globalThis.navigator.userAgent);
 
+/** */
+interface Event {
+  key: string;
+}
+
 /**
  * A utility object to easily check if certain keys are being pressed during `onkeydown` events. This
  * object provides methods to check for common special keys like Enter, Backspace, Shift, etc., and
  * also includes methods to handle modifier keys specific to different operating systems (Windows and
  * macOS).
  *
- * Each method takes a `KeyboardEvent` object and returns a boolean indicating whether the
+ * Each method takes a `Event` object and returns a boolean indicating whether the
  * corresponding key is being pressed.
  */
 export const Key = {
   /** Checks if the Enter key is pressed. */
-  Enter: (ev: KeyboardEvent): boolean => ev.key === 'Enter',
+  Enter: (ev: Event): boolean => ev.key === 'Enter',
 
   /** Checks if the Backspace key is pressed. */
-  Backspace: (ev: KeyboardEvent): boolean => ev.key === 'Backspace',
+  Backspace: (ev: Event): boolean => ev.key === 'Backspace',
 
   /** Checks if the Shift key is pressed. */
-  Shift: (ev: KeyboardEvent): boolean => ev.key === 'Shift',
+  Shift: (ev: Event): boolean => ev.key === 'Shift',
 
   /** Checks if the Escape key is pressed. */
-  Escape: (ev: KeyboardEvent): boolean => ev.key === 'Escape',
+  Escape: (ev: Event): boolean => ev.key === 'Escape',
 
   /** Checks if the Tab key is pressed. */
-  Tab: (ev: KeyboardEvent): boolean => ev.key === 'Tab',
+  Tab: (ev: Event): boolean => ev.key === 'Tab',
 
   /** Checks if the Control key is pressed (Windows). */
-  Control: (ev: KeyboardEvent): boolean => ev.key === 'Control',
+  Control: (ev: Event): boolean => ev.key === 'Control',
 
   /** Checks if the Meta key is pressed (Windows). */
-  Meta: (ev: KeyboardEvent): boolean => ev.key === 'Meta',
+  Meta: (ev: Event): boolean => ev.key === 'Meta',
 
   /** Checks if the Alt key is pressed. */
-  Alt: (ev: KeyboardEvent): boolean => ev.key === 'Alt',
+  Alt: (ev: Event): boolean => ev.key === 'Alt',
 
   /** Checks if the Spacebar is pressed. */
-  Spacebar: (ev: KeyboardEvent): boolean => ev.key === ' ',
+  Spacebar: (ev: Event): boolean => ev.key === ' ',
 
   /** Checks if the Arrow Up key is pressed. */
-  Up: (ev: KeyboardEvent): boolean => ev.key === 'ArrowUp',
+  Up: (ev: Event): boolean => ev.key === 'ArrowUp',
 
   /** Checks if the Arrow Down key is pressed. */
-  Down: (ev: KeyboardEvent): boolean => ev.key === 'ArrowDown',
+  Down: (ev: Event): boolean => ev.key === 'ArrowDown',
 
   /** Checks if the Arrow Left key is pressed. */
-  Left: (ev: KeyboardEvent): boolean => ev.key === 'ArrowLeft',
+  Left: (ev: Event): boolean => ev.key === 'ArrowLeft',
 
   /** Checks if the Arrow Right key is pressed. */
-  Right: (ev: KeyboardEvent): boolean => ev.key === 'ArrowRight',
+  Right: (ev: Event): boolean => ev.key === 'ArrowRight',
 
   /**
    * Checks if the Control key (Windows) is pressed.
    *
    * @see {@link isMacOS}
    */
-  CtrlWin: (ev: KeyboardEvent): boolean => ev.key === 'Control' && !isMacOS(),
+  CtrlWin: (ev: Event): boolean => ev.key === 'Control' && !isMacOS(),
 
   /**
    * Checks if the Windows key is pressed.
    *
    * @see {@link isMacOS}
    */
-  WindowsKey: (ev: KeyboardEvent): boolean => ev.key === 'Meta' && !isMacOS(),
+  WindowsKey: (ev: Event): boolean => ev.key === 'Meta' && !isMacOS(),
 
   /**
    * Checks if the Control key (macOS) is pressed.
    *
    * @see {@link isMacOS}
    */
-  CtrlMac: (ev: KeyboardEvent): boolean => ev.key === 'Control' && isMacOS(),
+  CtrlMac: (ev: Event): boolean => ev.key === 'Control' && isMacOS(),
 
   /**
    * Checks if the Command key (macOS) is pressed.
    *
    * @see {@link isMacOS}
    */
-  Command: (ev: KeyboardEvent): boolean => ev.key === 'Meta' && isMacOS(),
+  Command: (ev: Event): boolean => ev.key === 'Meta' && isMacOS(),
 
   /**
    * Checks if either Control (Windows) or Meta (macOS) key is pressed.
    *
    * @see {@link isMacOS}
    */
-  mod1: (ev: KeyboardEvent): boolean =>
+  mod1: (ev: Event): boolean =>
     (ev.key === 'Control' && !isMacOS()) || (ev.key === 'Meta' && isMacOS()),
 
   /**
@@ -127,7 +132,7 @@ export const Key = {
    *
    * @see {@link isMacOS}
    */
-  mod2: (ev: KeyboardEvent): boolean =>
+  mod2: (ev: Event): boolean =>
     (ev.key === 'Control' && isMacOS()) || (ev.key === 'Meta' && !isMacOS()),
 };
 
@@ -137,9 +142,9 @@ export const Key = {
  * keystroke combination is detected.
  */
 interface iKeystroke {
-  keys: ((ev: KeyboardEvent) => boolean)[];
-  except: ((ev: KeyboardEvent) => boolean)[];
-  cb: (ev: KeyboardEvent) => void;
+  keys: ((ev: Event) => boolean)[];
+  except: ((ev: Event) => boolean)[];
+  cb: (ev: Event) => void;
 }
 
 /**
@@ -149,13 +154,13 @@ interface iKeystroke {
  * @param {iKeystroke} keystroke
  *  The keystroke combination to check.
  *
- * @param {KeyboardEvent} ev
+ * @param {Event} ev
  *  The keyboard event to evaluate.
  *
  * @returns {boolean}
  *  True if the keystroke combination is detected, false otherwise.
  */
-const isKeyStroked = (keystroke: iKeystroke, ev: KeyboardEvent) =>
+const isKeyStroked = (keystroke: iKeystroke, ev: Event) =>
   keystroke.keys.reduce<boolean>(
     (accumulator, currentValue) => accumulator && currentValue(ev),
     true,
@@ -174,10 +179,9 @@ const isKeyStroked = (keystroke: iKeystroke, ev: KeyboardEvent) =>
  * @returns
  *  A function that processes keyboard events.
  */
-export const handleKeyboard =
-  (keystrokes: iKeystroke[]) => (ev: KeyboardEvent) =>
-    keystrokes.forEach((keystroke) => {
-      if (isKeyStroked(keystroke, ev)) {
-        keystroke.cb(ev);
-      }
-    });
+export const handleKeyboard = (keystrokes: iKeystroke[]) => (ev: Event) =>
+  keystrokes.forEach((keystroke) => {
+    if (isKeyStroked(keystroke, ev)) {
+      keystroke.cb(ev);
+    }
+  });
