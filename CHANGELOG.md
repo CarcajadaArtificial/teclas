@@ -1,5 +1,9 @@
 # Changelog
 
+# v1.0.1
+
+- Renamed `main.ts` to `mod.ts`
+
 # v1.0.0
 
 - Migrated the functionality from the Lunchbox project.
