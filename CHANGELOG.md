@@ -11,6 +11,10 @@
 - Event throttling/debouncing.
 - Key hold detection.
 
+## v1.0.8
+
+- Changed `iKeystroke` to `Keystroke`.
+
 ## v1.0.7
 
 - Added unit tests for the `isMacOS()` function.

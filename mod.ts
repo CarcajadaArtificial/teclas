@@ -66,7 +66,7 @@ export interface Event {
  * keys to be pressed, an array of keys to be excluded, and a callback function to be executed when the
  * keystroke combination is detected.
  */
-export interface iKeystroke {
+export interface Keystroke {
   keys: CheckKeypress[];
   except?: CheckKeypress[];
   cb: (ev: Event) => void;
@@ -86,7 +86,7 @@ export type CheckKeypress = (ev: Event) => boolean;
  * Function to check if a given keystroke combination is detected. It verifies that all keys in the
  * `keys` array are pressed and all keys in the `except` array are not pressed.
  *
- * @param {iKeystroke} keystroke
+ * @param {Keystroke} keystroke
  *  The keystroke combination to check.
  *
  * @param {Event} ev
@@ -95,7 +95,7 @@ export type CheckKeypress = (ev: Event) => boolean;
  * @returns {boolean}
  *  True if the keystroke combination is detected, false otherwise.
  */
-export const checkKeystroke = (keystroke: iKeystroke, ev: Event): boolean =>
+export const checkKeystroke = (keystroke: Keystroke, ev: Event): boolean =>
   keystroke.keys.reduce<boolean>(
     (accumulator, currentValue) => accumulator && currentValue(ev),
     true,
@@ -111,13 +111,13 @@ export const checkKeystroke = (keystroke: iKeystroke, ev: Event): boolean =>
  * Function to handle keyboard events based on an array of keystroke combinations. It checks each
  * keystroke combination and executes the associated callback if the combination is detected.
  *
- * @param {iKeystroke[]} keystrokes
+ * @param {Keystroke[]} keystrokes
  *  An array of keystroke combinations to handle.
  *
  * @returns
  *  A function that processes keyboard events.
  */
-export function handleKeyboard(keystrokes: iKeystroke[]): (ev: Event) => void {
+export function handleKeyboard(keystrokes: Keystroke[]): (ev: Event) => void {
   return (ev: Event) => {
     keystrokes.forEach((keystroke) => {
       if (checkKeystroke(keystroke, ev)) {
