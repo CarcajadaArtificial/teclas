@@ -1,5 +1,22 @@
 # Changelog
 
+## Roadmap
+
+- Implement an `else` scenario for the `handleKeyboard()` function.
+- Include unit testing for the module's functions. Compromises with mockups of
+  certain functionalities must be done.
+- Key secuence detection (e.g. Cmd+K then Cmd+C).
+- Asynchronous callback support.
+- Custom key aliases to the Key object.
+- Event throttling/debouncing.
+- Key hold detection.
+
+## v1.0.5
+
+- Added the type `CheckKeypress` to represent the function.
+- Updated the module's documentation.
+- Updated the project's README.
+
 ## v1.0.4
 
 - Added a Readme file.
