@@ -94,7 +94,7 @@ export type CheckKeypress = (ev: Event) => boolean;
  * @returns {boolean}
  *  True if the keystroke combination is detected, false otherwise.
  */
-export const checkKeystroke = (keystroke: iKeystroke, ev: Event) =>
+export const checkKeystroke = (keystroke: iKeystroke, ev: Event): boolean =>
   keystroke.keys.reduce<boolean>(
     (accumulator, currentValue) => accumulator && currentValue(ev),
     true,

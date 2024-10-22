@@ -11,6 +11,10 @@
 - Event throttling/debouncing.
 - Key hold detection.
 
+## v1.0.6
+
+- Added a fix to an explict return error.
+
 ## v1.0.5
 
 - Added the type `CheckKeypress` to represent the function.
