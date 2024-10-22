@@ -47,7 +47,8 @@
  * @returns {boolean}
  *  True if the current OS is macOS, false otherwise.
  */
-const isMacOS = (): boolean => /Mac/.test(globalThis.navigator.userAgent);
+export const isMacOS = (): boolean =>
+  /Macintosh/.test(globalThis.navigator.userAgent);
 
 // =====================================================================================================
 // Types
@@ -66,8 +67,8 @@ export interface Event {
  * keystroke combination is detected.
  */
 export interface iKeystroke {
-  keys: ((ev: Event) => boolean)[];
-  except: ((ev: Event) => boolean)[];
+  keys: CheckKeypress[];
+  except?: CheckKeypress[];
   cb: (ev: Event) => void;
 }
 
@@ -98,10 +99,12 @@ export const checkKeystroke = (keystroke: iKeystroke, ev: Event): boolean =>
   keystroke.keys.reduce<boolean>(
     (accumulator, currentValue) => accumulator && currentValue(ev),
     true,
-  ) && keystroke.except.reduce<boolean>(
-    (accumulator, currentValue) => accumulator && !currentValue(ev),
-    true,
-  );
+  ) && (keystroke.except
+    ? keystroke.except.reduce<boolean>(
+      (accumulator, currentValue) => accumulator && !currentValue(ev),
+      true,
+    )
+    : true);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /**

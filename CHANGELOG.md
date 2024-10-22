@@ -11,6 +11,10 @@
 - Event throttling/debouncing.
 - Key hold detection.
 
+## v1.0.7
+
+- Added unit tests for the `isMacOS()` function.
+
 ## v1.0.6
 
 - Added a fix to an explict return error.
